@@ -1,4 +1,3 @@
-import { AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import Image from "../prompt/select-images/image";
 import { formatMessage } from "./utils.";
@@ -13,7 +12,7 @@ export default function UserMessage({ message, images }: Props) {
         <div className="flex flex-col">
           <div className="flex flex-row gap-2">
             {images.map((img, index) => (
-              <Image key={index} src={img} width={60} height={80} />
+              <Image key={index} src={img} width={65} height={80} />
             ))}
           </div>
           <p className="text-sm mt-3">{formatMessage(message)}</p>

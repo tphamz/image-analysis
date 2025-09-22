@@ -4,7 +4,7 @@ import animations from "../../../../../components/resuable/animations";
 import SelectImages from "./select-images";
 import { Button } from "@/components/ui/button";
 import { Command, Send } from "lucide-react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePrompt } from "@/lib/stores/use-prompt";
 import { toast } from "sonner";
 import { useChat } from "@/lib/stores/use-chat";
@@ -12,7 +12,7 @@ import { useChat } from "@/lib/stores/use-chat";
 type Props = React.ComponentProps<"div"> & {
   maxImages?: number;
 };
-export default function Prompt({ maxImages = 4, ...rest }: Props) {
+export default function Prompt({ maxImages = 0, ...rest }: Props) {
   const { images, prompt, setPrompt, addImages, removeImage, reset } =
     usePrompt();
   const { loading, submit } = useChat();

@@ -34,7 +34,7 @@ export const createPromptAction = async (request: Request) => {
             messages,
         });
         return NextResponse.json({ result: text.replace("```json", "").replace("```", ""), status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.error("❌ Error analyzing images:", error);
 
         return NextResponse.json({ status: 500, error: "Failed to process the request" })

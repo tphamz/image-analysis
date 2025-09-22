@@ -2,6 +2,8 @@
 import Prompt from "@/app/(public-routes)/home/_components/prompt";
 import Chatbox from "./_components/chatbox";
 import { useChat } from "@/lib/stores/use-chat";
+
+const MAX_IMAGE_SIZE = parseInt(process.env.NEXT_PUBLIC_MAX_IMAGES || "4");
 export default function Home() {
   const { messages } = useChat();
   return (
@@ -19,7 +21,7 @@ export default function Home() {
           messages.length ? "fixed" : "relative"
         } bottom-0 left-0 prompt-container z-10 pb-2 p-2`}
       >
-        <Prompt className="max-w-6xl mx-auto" />
+        <Prompt className="max-w-6xl mx-auto" maxImages={MAX_IMAGE_SIZE} />
       </div>
     </div>
   );

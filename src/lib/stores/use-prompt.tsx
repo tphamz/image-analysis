@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toast } from "sonner";
 import { toJPEG } from "../utils";
 
-const MAX_SIZE = parseInt(process.env.NEXT_PUBLIC_MAX_IMAGES || "0");
+const MAX_SIZE = parseInt(process.env.NEXT_PUBLIC_MAX_IMAGES || "4");
 
 type Props = {
   prompt: string;
@@ -23,8 +23,9 @@ export const usePrompt = create<Props>((set, get) => ({
       if (MAX_SIZE - state.images.length <= 0) return;
       toast.dismiss();
       let i: number = 0;
-      for (let file of files) {
-        if (i >= Math.min(files.length, MAX_SIZE - state.images.length)) break;
+      for (const file of files) {
+        if (i++ >= Math.min(files.length, MAX_SIZE - state.images.length))
+          break;
         const compressedImage = await toJPEG(file, 0.6);
         state.images.push(compressedImage);
       }

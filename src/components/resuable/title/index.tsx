@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import * as animations from "../animations";
 export function Title({ children }: { children: React.ReactNode }) {
   return (

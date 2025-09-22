@@ -2,16 +2,17 @@ import { create } from "zustand";
 import { toast } from "sonner";
 import { analyzeImages } from "../services/api.service";
 
+type ContentProp = { images: string[]; prompt: string };
 type Props = {
   messages: { type: "user" | "ai"; message: any }[];
   loading: boolean;
-  submit: (value: any) => void;
+  submit: (value: ContentProp) => void;
 };
 
 export const useChat = create<Props>((set, get) => ({
   messages: [],
   loading: false,
-  submit: async (content: { images: string[]; prompt: string }) => {
+  submit: async (content: ContentProp) => {
     toast.dismiss();
     const state = get();
     state.messages.push({ type: "user", message: content });
@@ -28,10 +29,12 @@ export const useChat = create<Props>((set, get) => ({
         type: "ai",
         message: {
           overview: data.overview,
-          details: (data.details || []).map((item: any, index: number) => ({
-            image: content.images[index],
-            content: item.content,
-          })),
+          details: (data.details || []).map(
+            (item: { content: string }, index: number) => ({
+              image: content.images[index],
+              content: item.content,
+            })
+          ),
         },
       });
     } catch (error) {

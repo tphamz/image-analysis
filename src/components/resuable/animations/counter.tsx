@@ -1,7 +1,7 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import { gsap, Power1 } from "gsap";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type Props = React.ComponentProps<"div"> & {
   from?: number;

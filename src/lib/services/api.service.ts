@@ -13,6 +13,7 @@ export async function analyzeImages({ prompt, images }: AnalyzeImagesProps) {
 
         return res.data;
     } catch (err) {
+        console.log(err);
         return null;
     }
 }
