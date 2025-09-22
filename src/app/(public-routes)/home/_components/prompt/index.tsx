@@ -4,7 +4,7 @@ import animations from "../../../../../components/resuable/animations";
 import SelectImages from "./select-images";
 import { Button } from "@/components/ui/button";
 import { Command, Send } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePrompt } from "@/lib/stores/use-prompt";
 import { toast } from "sonner";
 import { useChat } from "@/lib/stores/use-chat";
@@ -12,12 +12,13 @@ import { useChat } from "@/lib/stores/use-chat";
 type Props = React.ComponentProps<"div"> & {
   maxImages?: number;
 };
+const MEDIUM_WINDOW_SIZE = 820;
 export default function Prompt({ maxImages = 0, ...rest }: Props) {
   const { images, prompt, setPrompt, addImages, removeImage, reset } =
     usePrompt();
   const { loading, submit } = useChat();
   const [isMac, setIsMac] = useState(false);
-
+  const isMediumSizeRef = useRef(false);
   const handleSubmit = async () => {
     toast.dismiss();
     if (!prompt.trim() || images.length === 0)
@@ -37,12 +38,16 @@ export default function Prompt({ maxImages = 0, ...rest }: Props) {
       (!isMac && e.ctrlKey && e.key === "Enter")
     ) {
       e.preventDefault();
-      console.log("Submit", { prompt, images });
       handleSubmit();
     }
   };
 
   useEffect(() => {
+    isMediumSizeRef.current =
+      Math.max(
+        Math.min(window.innerHeight, window.innerWidth),
+        MEDIUM_WINDOW_SIZE
+      ) <= MEDIUM_WINDOW_SIZE;
     if (typeof navigator !== "undefined") {
       setIsMac(
         navigator.userAgent.includes("Macintosh") ||
@@ -71,8 +76,8 @@ export default function Prompt({ maxImages = 0, ...rest }: Props) {
       <Textarea
         autoFocus
         placeholder="Ask anything..."
-        className="text-base sm:text-xl border-0 focus-visible:ring-0 shadow-none p-0 !bg-transparent flex-grow min-h-12 max-h-[200px] resize-none mt-2"
-        rows={15}
+        className="text-base sm:text-xl border-0 focus-visible:ring-0 shadow-none p-0 !bg-transparent flex-grow min-h-[24px] lg:min-h-[40px]  max-h-[100px] lg:max-h-[200px] resize-none mt-2"
+        rows={isMediumSizeRef.current ? 5 : 15}
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={handleKeyDown}
