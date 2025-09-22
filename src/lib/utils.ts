@@ -20,7 +20,7 @@ export function dataURLtoBase64(dataUrl: string): Blob {
   return new Blob([u8arr], { type: mime });
 }
 
-export function toJPEG(file: File, maxSizeMB = 2.5): Promise<string> {
+export function toJPEG(file: File, maxSizeMB = 0.5): Promise<string> {
   if (!isValidImage(file))
     return Promise.reject(new Error("❌ Invalid image format! Accepted formats are JPEG, PNG, GIF, WEBP, SVG."));
   return new Promise((resolve, reject) => {
