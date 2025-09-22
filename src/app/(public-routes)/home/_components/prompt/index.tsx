@@ -69,15 +69,15 @@ export default function Prompt({ maxImages = 0, ...rest }: Props) {
         onAdd={addImages}
         onRemove={removeImage}
         maxImages={maxImages}
-        imageHeight={80}
-        imageWidth={60}
+        imageHeight={isMediumSizeRef.current ? 60 : 80}
+        imageWidth={isMediumSizeRef.current ? 45 : 60}
         className="mb-2"
       />
       <Textarea
         autoFocus
         placeholder="Ask anything..."
         className="text-base sm:text-xl border-0 focus-visible:ring-0 shadow-none p-0 !bg-transparent flex-grow min-h-[24px] lg:min-h-[40px]  max-h-[100px] lg:max-h-[200px] resize-none mt-2"
-        rows={isMediumSizeRef.current ? 5 : 15}
+        rows={isMediumSizeRef.current ? 3 : 15}
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={handleKeyDown}
